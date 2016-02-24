@@ -1,4 +1,11 @@
-/* basic rules */
+/* body rules */
+
+body {
+	background-image: url("../images/background.jpg");
+	background-position: center;
+}
+
+/* text rules */
 p {
 	text-align: center;
 	font-size: 16px;
@@ -23,15 +30,13 @@ h2 {
 	font-size: 30px;
 }
 
-body {
-	background-image: url("../images/background.jpg");
-	background-position: center;
-}
+/* image rules */
 
 img {
 	margin-bottom: 10px;
 }
 
+/* button rules */
 input.btn {
 	margin-bottom: 5px;
 }
