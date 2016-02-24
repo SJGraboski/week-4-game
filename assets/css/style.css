@@ -73,6 +73,10 @@ div.panel, div.panel-default {
 	background-color: rgba(200, 200, 200, 0)
 }
 
+.fighter:hover {
+	cursor: pointer;
+}
+
 /* Will flip player image in battle area
    (https://css-tricks.com/snippets/css/flip-an-image/) */
 #player-img {
