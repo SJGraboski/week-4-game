@@ -42,7 +42,7 @@
 // FUNCTIONS / INTERFACE
 // ===================================
 
-	/* player needs to be able to hook a character, 
+	/* player can hook a character, 
 	 * use that character's points as his, and attack */
 	var player = {
 		hook : function(obj) {
@@ -67,7 +67,7 @@
 		}
 	}
 
-	/* computer needs to be able to hook a character, 
+	/* computer can hook a character, 
 	 * use that character's points as his, and counter-attack */
 	var computer = {
 		hook : function(obj) {
@@ -90,19 +90,21 @@
 		}
 	}
 
-	/* game needs to handle fight, win conditions, 
-	 * lose conditions, and round win collection */
+	/* Game Function: Main Interface for other objects */
 	var game = {
 
 		// game flags
 		playerChosen : false,
 		computerChosen : false,
 
-		// onload
+		// boot up game
 		load : function(){
 			this.playerChosen = false;
 			this.computerChosen = false;
 			wins = 0;
+
+			// display start message in fight-info div
+			$('#fight-info').append("<p>Choose your Character and your Opponents below!</p>");
 			// load each of characters (arr) into box
 			for (var i = 0; i < characters.length; i++) {
 
@@ -123,12 +125,10 @@
 
 				// make header reference player selection
 				$("#char-header").text("Choose Your Character");
-
 			}
 		},
 
 		select : function(sel) {
-
 			// 1: player chooses a character
 			if (!game.playerChosen) {
 				// catch character, put info in battlezone
@@ -187,8 +187,8 @@
 				var computerChoice = true;
 			}
 
-			/* 3: check if player and comp was chosen
-			 *   and append the attack button if so */
+			/* 3: check if player and comp was chosen,
+			 *   and if so, append the attack button  */
 			if (playerChoice) {
 				game.playerChosen = true;
 			}
@@ -197,11 +197,22 @@
 				game.computerChosen = true;
 				var fightMes = "<p id='fight-message'>Fight</p>";
 				var attackButton = $("<input class='btn btn-danger' type='button' value='attack'>");
+				
+				// Clear out fight-info div, then fill it in with the attack button
+				$("#fight-info").empty();
 				$("#fight-info").append(fightMes, attackButton);
 			}
 		},
 
 		clash : function() {
+			// 1: Player attack portion
+			// ========================
+
+			// remove any existing attack messages, then display new player attack message
+			$('.attack-mes').remove();
+			var p_damageMessage = $("<p class='attack-mes'>You attack " + computer.name + 
+															" for " + player.ap + " damage.</p>")
+			$("#fight-info").append(p_damageMessage);
 			// player attacks
 			player.attack(computer);
 
@@ -223,18 +234,32 @@
 					game.playerChosen = false;
 					game.computerChosen = false;
 
-					// empty/remove divs
+					// empty/remove apropos divs
 					$('#fight-info').empty();
 					$('#char-slots').empty();
 					$('#player').remove();
 
-					// reload the game
+					// reload the game, stop the function
 					this.load();
+					return;
 				}
+
+				// if player didn't reach 3 wins, show a victory message
+				$('#fight-info').append("<p>You beat " + computer.name + 
+																"! Choose your next opponent!</p>")
+
 			}
+			// 2. Computer Attack Portion
+			// ===========================
+
+			// if win condition isn't met, computer attacks
 			else {
-				// computer attacks if no win occurrs
-				computer.update();
+				// display computer's attack message
+				var c_damageMessage = $("<p class='attack-mes'>" + computer.name + 
+																" attacks you for " + computer.cap + " damage.</p>");
+				$("#fight-info").append(c_damageMessage);
+
+				// attack
 				computer.attack(player);
 			}
 
@@ -242,21 +267,25 @@
 			if (player.hp <= 0) {
 				player.hp = 0;
 				player.update();
-				alert("You lose");
+				alert("You lose...play again!");
 				game.playerChosen = false;
 				this.computerChosen = false;
 
-				// empty/remove divs
+				// empty/remove apropos divs
 				$('#fight-info').empty();
 				$('#char-slots').empty();
 				$('#player').remove();
 				$('#computer').remove();
 
-				// start the game over
+				// reload the game, stop the function
 				this.load();
 				return;
 			}
+
+			/* if no win or lose conditions are met
+			 * update the player and computer stats in the html */
 			player.update();
+			computer.update();
 		}
 	}
 

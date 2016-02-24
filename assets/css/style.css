@@ -32,6 +32,10 @@ img {
 	margin-bottom: 10px;
 }
 
+input.btn {
+	margin-bottom: 5px;
+}
+
 /* div rules */
 .jumbotron {
 	background-color: rgba(200, 200, 200, 0.5);
@@ -40,7 +44,7 @@ img {
 }
 
 #battle-body {
-	height:441px;
+	min-height:441px;
 	background-color: rgba(200, 200, 200, 0.8);
 
 }
@@ -54,6 +58,10 @@ img {
 #char-slots{
 	min-height:180px;
 	background-color: rgba(200, 200, 200, 0.8);
+}
+
+#char-container {
+	margin-bottom: 20px;
 }
 
 div.panel, div.panel-default {
@@ -74,7 +82,7 @@ div.panel, div.panel-default {
 /* Media Queries */
 @media screen and (max-width: 1199px) {
 	#battle-body{
-		height:363px;
+		min-height:373px;
 	}
 	#fight-message {
 		font-size:40px;
@@ -85,7 +93,7 @@ div.panel, div.panel-default {
 
 @media screen and (max-width: 991px) {
 	#battle-body{
-		height:290px;
+		min-height:300px;
 	}
 	#fight-message {
 		font-size:30px;
@@ -95,8 +103,8 @@ div.panel, div.panel-default {
 
 @media screen and (max-width: 767px) {
 	#battle-body{
-		height:auto;
-		min-height: 170px; 
+		min-height:auto;
+		min-height: 180px; 
 	}
 	#fight-message {
 		font-size: 50px;
@@ -142,6 +150,7 @@ body {
   width: 100%; /* Set the fixed height of the footer here */
   height: 80px;
   background-color: #f5f5f5;
+  margin-top: 20px;
   padding-top: 20px;
   padding-bottom: 20px;
 }
