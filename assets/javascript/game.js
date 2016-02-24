@@ -24,16 +24,16 @@
 	}
 
 	// create our characters
-	han = new Character ('Han Solo', 'han', 'http://placehold.it/125x125', 
+	han = new Character ('Han Solo', 'han', 'assets/images/han.jpg', 
 		170, 25, 50, characters);
 
-	greedo = new Character ('Greedo', 'greedo', 'http://placehold.it/125x125', 
+	greedo = new Character ('Greedo', 'greedo', 'assets/images/greedo.jpg', 
 		110, 30, 40, characters);
 
-	boba = new Character ('Boba Fett', 'boba', 'http://placehold.it/125x125', 
+	boba = new Character ('Boba Fett', 'boba', 'assets/images/boba.jpg', 
 		130, 35, 70, characters);
 
-	lando = new Character ('Lando Calrissian', 'lando', 'http://placehold.it/125x125', 
+	lando = new Character ('Lando Calrissian', 'lando', 'assets/images/lando.jpg', 
 		60, 45, 80, characters);
 
 
@@ -107,30 +107,36 @@
 			for (var i = 0; i < characters.length; i++) {
 
 				// prepare elements
-				var charDiv = $("<div class='col-sm-3'>");
+				var charDiv = $("<div class='col-xs-3'>");
 				var charImg = $("<img alt='" + characters[i].name + 
-					"' class='fighter' data-name='" + characters[i].dataName +
+					"' class='fighter img-responsive' data-name='" + characters[i].dataName +
 					"'>").attr("src", characters[i].pic);
-				var charHP = $("<p>HP: " + characters[i].hp + "</p>");
-				var charAP = $("<p>Attack: " + characters[i].ap + "</p>");
-				var charCAP = $("<p>Counter: " + characters[i].cap + "</p>");
+				var charHP = $("<p class='hp'>HP: " + characters[i].hp + "</p>");
+				var charAP = $("<p class='ap'>Attack: " + characters[i].ap + "</p>");
+				var charCAP = $("<p class='cap'>Counter: " + characters[i].cap + "</p>");
 
 				// father the div with it's child elements
 				charDiv.append(charImg, charHP, charAP, charCAP);
 
-				//display elements
+				// display elements
 				$('#char-slots').append(charDiv);
+
+				// make header reference player selection
+				$("#char-header").text("Choose Your Character");
+
 			}
 		},
 
 		select : function(sel) {
+
+			// 1: player chooses a character
 			if (!game.playerChosen) {
-				// catch character, put img in battlezone
+				// catch character, put info in battlezone
 				var charName = sel.attr("data-name");
 				var choice = eval(charName);
 				var choiceDiv = $("<div id='player'>");
 				var choiceImg = $("<img alt='" + choice.name + 
-						"' id='player'>").attr("src", choice.pic);
+						"' class='img-responsive' id='player-img'>").attr("src", choice.pic);
 				var choiceHP = $("<p id='player-hp'>HP: " + choice.hp + "</p>");
 				var choiceAP = $("<p id='player-ap'>Attack: " + choice.ap + "</p>");
 
@@ -141,15 +147,23 @@
 				$("#attacker-area").append(choiceDiv);
 				sel.parent().remove();
 
+				// change size of remaining characters
+				$(".fighter").parent().toggleClass("col-xs-3");
+				$(".fighter").parent().addClass("col-xs-4");
+
+				// change name of charslot header
+				$("#char-header").text("Select Your Opponent");
+
+				// remove attack stats from charslot
+				$(".ap").remove();
+
+
 				// set player as choice
 				player.hook(choice);
 				var playerChoice = true;
-			}
+			}		
 
-		// click fighter pictures
-		
-
-			// 2: choose an enemy
+			// 2: player chooses an enemy
 			if (game.playerChosen && !game.computerChosen) {
 
 				// catch character, put info in elements
@@ -157,7 +171,7 @@
 				var choice = eval(charName);
 				var choiceDiv = $("<div id='computer'>");
 				var choiceImg = $("<img alt='" + choice.name + 
-						"' id='computer'>").attr("src", choice.pic);
+						"' class='img-responsive' id='computer-img'>").attr("src", choice.pic);
 				var choiceHP = $("<p id='computer-hp'>HP: " + choice.hp + "</p>");
 				var choiceCAP = $("<p id='computer-cap'>Counter: " + choice.cap + "</p>");
 				
@@ -173,70 +187,76 @@
 				var computerChoice = true;
 			}
 
-			// check if player or comp was chosen
+			/* 3: check if player and comp was chosen
+			 *   and append the attack button if so */
 			if (playerChoice) {
 				game.playerChosen = true;
 			}
 
 			if (computerChoice) {
 				game.computerChosen = true;
-				var attackButton = $("<input type='button' value='attack'>");
-				$("#attack-button").append(attackButton);
+				var fightMes = "<p id='fight-message'>Fight</p>";
+				var attackButton = $("<input class='btn btn-danger' type='button' value='attack'>");
+				$("#fight-info").append(fightMes, attackButton);
 			}
 		},
 
 		clash : function() {
 			// player attacks
 			player.attack(computer);
+
 			// win condition
 			if (computer.hp <= 0) {
 				computer.hp = 0;
 				computer.update();
-				alert("you win");
 				wins++;
 				this.computerChosen = false;
 				// empty/remove divs
 				$('#computer').remove();
-				$('#attack-button').empty();
+				$('#fight-info').empty();
+
+				// if player wins 3 rounds, start the game over
+				if (wins === 3) {
+					alert("You beat the game! Play again!");
+
+					// reset game counters
+					game.playerChosen = false;
+					game.computerChosen = false;
+
+					// empty/remove divs
+					$('#fight-info').empty();
+					$('#char-slots').empty();
+					$('#player').remove();
+
+					// reload the game
+					this.load();
+				}
 			}
 			else {
 				// computer attacks if no win occurrs
 				computer.update();
 				computer.attack(player);
 			}
-			player.update();
 
 			// lose condition
 			if (player.hp <= 0) {
-				alert("you lose");
+				player.hp = 0;
+				player.update();
+				alert("You lose");
 				game.playerChosen = false;
 				this.computerChosen = false;
+
 				// empty/remove divs
-				$('#attack-button').empty();
+				$('#fight-info').empty();
 				$('#char-slots').empty();
 				$('#player').remove();
 				$('#computer').remove();
 
 				// start the game over
 				this.load();
+				return;
 			}
-
-			// 3 rounds won, start over
-			if (wins === 3) {
-				alert("You beat the game! Play again!");
-
-				// reset game counters
-				game.playerChosen = false;
-				game.computerChosen = false;
-
-				// empty/remove divs
-				$('#attack-button').empty();
-				$('#char-slots').empty();
-				$('#player').remove();
-
-				// start the game over
-				this.load();
-			}
+			player.update();
 		}
 	}
 
@@ -255,7 +275,7 @@
 		});
 
 		// click attack
-		$('body').on('click', '#attack-button', function() {
+		$('body').on('click', '#fight-info', function() {
 			game.clash()
 		});
 	

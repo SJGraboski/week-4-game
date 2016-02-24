@@ -2,12 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
 	<title>Star Wars RPG</title>
 
 	<!-- Stylesheets -->
 	<link rel='stylesheet' href="assets/css/reset.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 	<link rel='stylesheet' href="assets/css/style.css">
+
+	<!-- Adobe Typekit -->
+	<script src="https://use.typekit.net/dyw1opj.js"></script>
+<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
 	<!-- Jquery and BS -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -26,33 +32,38 @@
 		<div class="container">
 			<!-- Battle Zone -->
 			<div class='row'>
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h3 class="panel-title">Battle Area</h3>
-					</div>
-					<div class="panel-body">
-						<div id="attacker-area" class='col-sm-5 col-sm-offset-1'>
-							<div id="attack-button">
-
-							</div>
+				<div class="col-xs-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h2 class="panel-title">Battle Area</h2>
 						</div>
-						<div id="defender-area" class='col-sm-5'>
-							
+						<div id="battle-body" class="panel-body">
+							<div class='row'>
+								<div id="attacker-area" class='col-sm-4 col-xs-4 col-sm-offset-1'>
+
+								</div>
+								<div id="fight-info" class="text-center col-sm-2 col-xs-4" >
+
+								</div>
+								<div id="defender-area" class='col-sm-4 col-xs-4'>
+
+								</div>
+									
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-
 			<!-- Character Select / Enemies Left -->
 			<div class='row'>
-				<div class='col-sm-10 col-sm-offset-1'>
+				<div id="char-container" class='col-sm-10 col-xs-12 col-sm-offset-1'>
 					<div class="panel panel-default">
 						<div class="panel-heading">
 							<!-- 
 									 When player chooses his character, h3 changes 
 									 from "Choose your Character" to "Choose Enemy" 
 								-->
-							<h3 class="panel-title">Choose your Character</h3>
+							<h2 id="char-header" class="panel-title">Choose your Character</h2>
 						</div>
 						<div class="panel-body" id='char-slots'>
 
@@ -60,11 +71,7 @@
 					</div>
 				</div>
 			</div>
-				
-			</div>
-			</div>
 		</div>
-
 	</div>
 
 	<!-- Star Wars RPG JS -->

@@ -1,0 +1,152 @@
+/* basic rules */
+p {
+	text-align: center;
+	font-size: 16px;
+	font-family: "rooney-sans",sans-serif;
+}
+
+h1, h2 {
+	text-align: center;
+	font-family: "refrigerator-deluxe", sans-serif;
+	opacity: 1;
+	margin: 10px;
+}
+
+h1 {
+	font-weight: 800;
+}
+
+h2 {
+	font-weight: bold;
+}
+.panel-title{
+	font-size: 30px;
+}
+
+body {
+	background-image: url("../images/background.jpg");
+	background-position: center;
+}
+
+img {
+	margin-bottom: 10px;
+}
+
+/* div rules */
+.jumbotron {
+	background-color: rgba(200, 200, 200, 0.5);
+	height: auto;
+	padding: 10px;
+}
+
+#battle-body {
+	height:441px;
+	background-color: rgba(200, 200, 200, 0.8);
+
+}
+
+#fight-message {
+	font-size:50px;
+	text-transform: uppercase;
+	margin-top:100px;
+}
+
+#char-slots{
+	min-height:180px;
+	background-color: rgba(200, 200, 200, 0.8);
+}
+
+div.panel, div.panel-default {
+	background-color: rgba(200, 200, 200, 0)
+}
+
+/* Will flip player image in battle area
+   (https://css-tricks.com/snippets/css/flip-an-image/) */
+#player-img {
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+  filter: FlipH;
+  -ms-filter: "FlipH";
+}
+
+/* Media Queries */
+@media screen and (max-width: 1199px) {
+	#battle-body{
+		height:363px;
+	}
+	#fight-message {
+		font-size:40px;
+		text-transform: uppercase;
+		margin-top:75px;
+	}
+}
+
+@media screen and (max-width: 991px) {
+	#battle-body{
+		height:290px;
+	}
+	#fight-message {
+		font-size:30px;
+		margin-top:50px;
+	}
+}
+
+@media screen and (max-width: 767px) {
+	#battle-body{
+		height:auto;
+		min-height: 170px; 
+	}
+	#fight-message {
+		font-size: 50px;
+		margin-top: 30px;
+	}
+}
+
+@media screen and (max-width: 670px) {
+	#fight-message {
+		font-size:45px;
+		margin-top:25px;
+	}
+}
+
+@media screen and (max-width: 570px) {
+	#fight-message {
+		font-size:35px;
+		margin-top:20px;
+	}
+}
+
+@media screen and (max-width: 470px) {
+	#fight-message {
+		font-size:25px;
+		margin-top:15px;
+	}
+}
+
+/* Sticky Footer rules (https://getbootstrap.com/examples/sticky-footer/)*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%; /* Set the fixed height of the footer here */
+  height: 80px;
+  background-color: #f5f5f5;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+#footer p {
+	font-size: 16px;
+	margin: 0;
+}
